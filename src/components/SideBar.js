@@ -38,23 +38,23 @@ const SIdeBar = () => {
     <div className="p-5 shadow-lg w-64 border border-black  h-fit text-2xl">
       <ul className="w-64">
         <li className="flex">
-        <Link to={"/"}>
-          <HiHome className="text-4xl mr-2" /> Home
+        <Link to={"/"} className="flex">
+          <HiHome className="text-2xl mt-1 mr-5" /> Home
         </Link>
         </li>
         <li className="flex">
-        <Link to={"/short"}>
-          <BiSolidVideos className="text-4xl mr-2" /> Shorts
+        <Link to={"/short"} className="flex">
+          <BiSolidVideos className="text-2xl mt-1 mr-5" /> Shorts
         </Link>
         </li>
         <li className="flex">
-        <Link to={"/video"}>
-          <BiVideo className="text-4xl mr-2" /> Video
+        <Link to={"/video"} className="flex">
+          <BiVideo className="text-2xl mt-1 mr-5" /> Video
         </Link>
         </li>
         <li className="flex">
-        <Link to={"/live"}>
-          <BiLogoVimeo className="text-4xl mr-2" /> Lives
+        <Link to={"/live"} className="flex">
+          <BiLogoVimeo className="text-2xl mt-1 mr-5" /> Lives
         </Link>
         </li>
       </ul>
