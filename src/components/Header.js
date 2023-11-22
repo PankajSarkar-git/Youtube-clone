@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { HiBars3 } from "react-icons/hi2";
-import { AiFillYoutube, AiOutlineSearch } from "react-icons/ai";
+import { AiFillYoutube,AiOutlineSearch } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/Constants";
 import { cacheResults } from "../utils/searchSlice";
+import { Link } from "react-router-dom";
+import Suggestion from "./Suggestion";
 
 const Header = () => {
   const [searchQuery, setSearchQueary] = useState("");
@@ -31,26 +33,29 @@ const Header = () => {
     };
   }, [searchQuery]);
 
-
   const getSearchSuggestion = async () => {
     const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + searchQuery);
     const json = await data.json();
     setSearchSuggestion(json[1]);
     // console.log(json[1]);
-
-
-    
-        // update cach data
-
-        dispatch(cacheResults({
-          [searchQuery] : json[1],
-        }))
-
+    // update cach data
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
   };
 
   const toggleMenuHandeler = () => {
     dispatch(toggleMenu());
   };
+
+  const searchVideo = (e) => {
+    setSearchQueary(e.target.value);
+    getSearchVideo();
+  };
+
+  const getSearchVideo = async () => {};
 
   return (
     <div className="grid grid-flow-col px-2 shadow-lg items-center h-20">
@@ -79,7 +84,7 @@ const Header = () => {
             onFocus={() => setShowSuggestion(true)}
             onBlur={() => setShowSuggestion(false)}
           />
-          <button className="border py-2 px-6  outline-none rounded-r-full text-xl h-10 border-gray-500 bg-gray-100">
+          <button onClick={searchVideo} className="border py-2 px-6  outline-none rounded-r-full text-xl h-10 border-gray-500 bg-gray-100">
             <AiOutlineSearch />
           </button>
         </div>
@@ -88,14 +93,11 @@ const Header = () => {
             {searchSuggestion.length !== 0 && (
               <div className="bg-white w-[53%] flex text-xl p-2 absolute shadow-md rounded-lg">
                 <ul className="w-full border-l border-r ">
-                  {searchSuggestion.map((suggestion) => (
-                    <li
-                      className="border-t p-1 hover:bg-gray-300 flex"
-                      key={suggestion}
-                    >
-                      <AiOutlineSearch className="mr-3 mt-2" /> {suggestion}
-                    </li>
-                  ))}
+                  {searchSuggestion.map((suggestion) =>{
+                    return (
+                      <Suggestion suggestion={suggestion}/>
+                    )
+                  })}
                 </ul>
               </div>
             )}

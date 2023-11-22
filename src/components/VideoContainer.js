@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { YOUTUBE_VIDEO_API } from "../utils/Constants";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { openMenu } from '../utils/appSlice'
+import useVideo from "../utils/useVideo";
+import loading from "../Loading/Infinity-1s-200px.gif"
 
 
 const VideoContainer = () => {
-  const [videos, setVideos] = useState({});
+ const videos = useVideo()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    getVideos();
     dispatch(openMenu())
   }, []);
-  const getVideos = async () => {
-    const data = await fetch(YOUTUBE_VIDEO_API);
-    const json = await data.json();
-    setVideos(json.items);
-  };
+  
 
   // console.log(videos.length);
   if (!videos.length) {
-    return <h1>Loading......</h1>;
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <img src={loading} alt="loading..." />
+      </div>
+    );
   }
   return (
     <div className="flex flex-wrap justify-around">
