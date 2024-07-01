@@ -10,49 +10,40 @@ const VideInfo = ({ videoInfo }) => {
   const { likeCount, viewCount } = statistics;
 
   return (
-    <div className="w-[1000px] p-3">
+    <div className="w-full md:w-[1000px] mx-auto p-4 bg-white shadow-lg rounded-lg">
       <h2 className="font-bold text-xl py-2">{title}</h2>
-      <div className="flex items-center gap-2 py-3 mt-3 text-lg justify-between">
-        <div className="flex items-center gap-2  text-lg">
+      <div className="flex items-center justify-between py-3 mt-3 text-lg">
+        <div className="flex items-center gap-2">
           <BiSolidUserCircle className="text-4xl" />
-          <p className=" font-bold">{channelTitle}</p>
-          <button className="rounded-full bg-black px-4 py-2  text-white">
+          <p className="font-bold">{channelTitle}</p>
+          <button className="rounded-full bg-black px-4 py-2 text-white hover:bg-gray-800 transition-colors duration-300">
             Subscribe
           </button>
         </div>
-        <div className="text-lg flex gap-3 ">
-          <div className="flex ">
-            <button className="bg-gray-100 rounded-l-full px-5 hover:bg-gray-400  py-2">
+        <div className="flex gap-3">
+          <div className="flex">
+            <button className="bg-gray-100 rounded-l-full px-5 py-2 hover:bg-gray-200 transition-colors duration-300">
               <AiOutlineLike className="inline" />{" "}
               {Math.round(likeCount / 1000)}K
             </button>
-            <button className="bg-gray-100 rounded-r-full px-5 hover:bg-gray-400  py-2">
-              <AiOutlineDislike />
+            <button className="bg-gray-100 rounded-r-full px-5 py-2 hover:bg-gray-200 transition-colors duration-300">
+              <AiOutlineDislike className="inline" />
             </button>
           </div>
-          <div className=" ">
-            <button className="bg-gray-100 rounded-full px-5 hover:bg-gray-400  py-2">
-              <IoMdShareAlt className="inline" /> Share
-            </button>
-          </div>
-          <div className=" ">
-            <button className="bg-gray-100 rounded-full px-5 hover:bg-gray-400  py-2">
-              <GiSaveArrow className="inline" /> Download
-            </button>
-          </div>
-          <div className=" ">
-            <button className="bg-gray-100 rounded-full px-5 hover:bg-gray-400  py-2">
-              <IoIosMore className="inline" />
-            </button>
-          </div>
+          <button className="bg-gray-100 rounded-full px-5 py-2 hover:bg-gray-200 transition-colors duration-300">
+            <IoMdShareAlt className="inline" /> Share
+          </button>
+          <button className="bg-gray-100 rounded-full px-5 py-2 hover:bg-gray-200 transition-colors duration-300">
+            <GiSaveArrow className="inline" /> Download
+          </button>
+          <button className="bg-gray-100 rounded-full px-5 py-2 hover:bg-gray-200 transition-colors duration-300">
+            <IoIosMore className="inline" />
+          </button>
         </div>
       </div>
       <div className="mt-3">
-        <div className="bg-gray-300 text-lg p-2">
-          <span className="mr-5">{viewCount}</span>
-          <span className="mx-5">{publishedAt}</span>
-          <span className="">{title}</span>
-          <p className="mt-5">{description}</p>
+        <div className="bg-gray-300 text-lg p-4 rounded-lg">
+          <p className="text-gray-700">{description}</p>
         </div>
       </div>
     </div>

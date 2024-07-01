@@ -158,9 +158,9 @@ const commentData = [
 
 const CommentsContainer = () => {
   return (
-    <div className="m-2 p-5 bg-gray-50">
-      <h1 className="text-2xl font-bold ">Comments:</h1>
-      <CommentList comments ={commentData} />
+    <div className="m-2 p-5 bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold mb-4">Comments:</h1>
+      <CommentList comments={commentData} />
     </div>
   );
 };
