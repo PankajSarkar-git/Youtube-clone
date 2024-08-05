@@ -1,9 +1,15 @@
 import React from "react";
 
-const Button = ({ name }) => {
+const Button = ({ name, activeIndex, index }) => {
   return (
     <div>
-      <button className="px-6 py-3 m-2 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-300 ease-in-out">
+      <button
+        className={` ${
+          activeIndex === index
+            ? "bg-black text-white"
+            : "text-black bg-gray-400"
+        }  px-4 py-1 m-2  whitespace-nowrap font-semibold rounded-lg shadow-lg hover:bg-black hover:text-white transform hover:scale-105 transition-all duration-300 ease-in-out`}
+      >
         {name}
       </button>
     </div>

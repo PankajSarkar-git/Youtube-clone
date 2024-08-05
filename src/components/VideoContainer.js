@@ -23,7 +23,7 @@ const VideoContainer = () => {
     );
   }
   return (
-    <div className="flex flex-wrap justify-around p-4">
+    <div className="flex flex-wrap justify-around p-4 h-[80vh] overflow-y-scroll no-scrollbar">
       {videos.map((video) => (
         <Link to={`/watch?v=${video.id}`} key={video.id} className="m-2">
           <VideoCard info={video} />

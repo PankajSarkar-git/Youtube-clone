@@ -5,13 +5,13 @@ import Header from "./Header.js";
 
 const Body = () => {
   return (
-    <div className="">
+    <div className="no-scrollbar w-full">
       <Header />
-      <div className="flex flex-col md:flex-row ">
+      <div className="flex w-full">
         <div className=" bg-gray-200">
           <SideBar />
         </div>
-        <div className="">
+        <div className="overflow-hidden w-full">
           <Outlet />
         </div>
       </div>

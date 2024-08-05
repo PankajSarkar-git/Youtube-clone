@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiBars3 } from "react-icons/hi2";
 import { AiFillYoutube, AiOutlineSearch } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/Constants";
 import { cacheResults } from "../utils/searchSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [searchQuery, setSearchQueary] = useState("");
@@ -15,6 +15,7 @@ const Header = () => {
 
   const searchCache = useSelector((store) => store.search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // console.log(searchQuery);
@@ -58,14 +59,43 @@ const Header = () => {
     getSearchVideo();
   };
 
-  const getSearchVideo = async () => {};
-
-  const navigateResult = () => {
-    console.log("navigate");
+  const getSearchVideo = async () => {
+    navigate(`/results?v=${searchQuery}`);
+    setSearchQueary(searchQuery);
   };
 
+  const navigateResult = (suggestion) => {
+    setSearchQueary(suggestion);
+    navigate(`/results?v=${suggestion}`);
+    console.log("navigate", suggestion);
+    setShowSuggestion(false);
+  };
+
+  const unitRef = useRef();
+  const useOutsideAlerter = (ref) => {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          if (!showSuggestion) {
+            setShowSuggestion(false);
+          }
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("click", handleClickOutside, true);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("click", handleClickOutside, true);
+      };
+    }, [ref]);
+  };
+  useOutsideAlerter(unitRef);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 px-2 shadow-lg items-center h-20 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-12 px-2 shadow-md items-center h-20 w-full">
       <div className="flex col-span-4 md:col-span-4">
         <div
           className="p-1 hover:bg-gray-200 hover:rounded-[50%] mr-4 cursor-pointer"
@@ -82,40 +112,45 @@ const Header = () => {
         </Link>
       </div>
       <div className="col-span-7 md:col-span-7 px-2 md:px-10 relative">
-        <div className="flex">
-          <input
-            type="text"
-            className="w-full md:w-2/4 h-10 rounded-l-full p-2 border border-r-0 text-sm md:text-2xl outline-none border-gray-500"
-            onChange={(e) => setSearchQueary(e.target.value)}
-            value={searchQuery}
-            onFocus={() => setShowSuggestion(true)}
-            onBlur={() => setShowSuggestion(false)}
-          />
-          <button
-            onClick={searchVideo}
-            className="border py-2 px-4 md:px-6 outline-none rounded-r-full text-sm md:text-xl h-10 border-gray-500 bg-gray-100"
-          >
-            <AiOutlineSearch />
-          </button>
-        </div>
-        {showSuggestion && (
-          <div>
-            {searchSuggestion.length !== 0 && (
-              <div className="bg-white w-full md:w-[53%] flex text-sm md:text-xl p-2 absolute shadow-md rounded-lg">
-                <ul className="w-full border-l border-r">
-                  {searchSuggestion.map((suggestion) => (
-                    <div key={suggestion} onClick={navigateResult}>
-                      <li className="border-t p-1 hover:bg-gray-300 flex">
-                        <AiOutlineSearch className="mr-3 mt-2" />
-                        {suggestion}
-                      </li>
-                    </div>
-                  ))}
-                </ul>
-              </div>
-            )}
+        <div className="w-fit" ref={unitRef}>
+          <div className="flex w-full">
+            <input
+              type="text"
+              className="w-full md:w-full h-10 rounded-l-full p-2 px-3 border border-r-0 text-sm md:text-2xl outline-none border-gray-500"
+              onChange={(e) => setSearchQueary(e.target.value)}
+              value={searchQuery}
+              onFocus={() => setShowSuggestion(true)}
+              // onBlur={() => setShowSuggestion(false)}
+            />
+            <button
+              onClick={searchVideo}
+              className="border py-2 px-4 md:px-6 outline-none rounded-r-full text-sm md:text-xl h-10 border-gray-500 bg-gray-100"
+            >
+              <AiOutlineSearch />
+            </button>
           </div>
-        )}
+          {showSuggestion && (
+            <div>
+              {searchSuggestion.length !== 0 && (
+                <div className="bg-white w-full md:w-[53%] flex text-sm md:text-xl p-2 absolute shadow-md rounded-lg z-10">
+                  <ul className="w-full border-l border-r">
+                    {searchSuggestion.map((suggestion) => (
+                      <div key={suggestion}>
+                        <li
+                          className="border-t p-1 hover:bg-gray-300 flex cursor-pointer z-50"
+                          onClick={() => navigateResult(suggestion)}
+                        >
+                          <AiOutlineSearch className="mr-3 mt-2" />
+                          {suggestion}
+                        </li>
+                      </div>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
       <div className="col-span-1 md:col-span-1 text-sm md:text-2xl">
         <FaUserAlt />
