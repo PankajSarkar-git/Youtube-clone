@@ -121,6 +121,7 @@ const Header = () => {
               value={searchQuery}
               onFocus={() => setShowSuggestion(true)}
               // onBlur={() => setShowSuggestion(false)}
+              placeholder="Search"
             />
             <button
               onClick={searchVideo}

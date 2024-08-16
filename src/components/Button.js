@@ -1,9 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Button = ({ name, activeIndex, index }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <button
+        onClick={() => {
+          if (name !== "All") {
+            navigate(`/results?v=${name}`);
+          }else{
+          navigate(`/`);
+          }
+        }}
         className={` ${
           activeIndex === index
             ? "bg-black text-white"

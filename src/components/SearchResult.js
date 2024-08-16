@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { GOOGLE_API_KEY, SEARCH_API } from "../utils/Constants";
 import SearchResultVideoCardComponent from "./SearchResultVideoCardComponent";
+import ButtonList from "./ButtonList";
 
 const SearchResult = () => {
   const [suggestionParam] = useSearchParams();
@@ -25,6 +26,7 @@ const SearchResult = () => {
   };
   return (
     <div className="overflow-y-scroll h-screen no-scrollbar">
+      <ButtonList />
       {apiData &&
         apiData.map((video) => (
           <Link
