@@ -31,7 +31,7 @@ const WatchPage = () => {
   console.log(videoInfo.length, "videoInfo.length");
   if (!videoInfo.length) {
     return (
-      <div className="w-fit flex h-screen items-center justify-center">
+      <div className="w-full flex h-screen items-center justify-center">
         <img src={loading} alt="loading..." />
       </div>
     );

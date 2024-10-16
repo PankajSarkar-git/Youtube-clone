@@ -8,10 +8,10 @@ const Body = () => {
     <div className="no-scrollbar w-full">
       <Header />
       <div className="flex w-full">
-        <div className=" bg-gray-200">
+        <div className="bg-gray-200 min-h-screen sticky top-0">
           <SideBar />
         </div>
-        <div className="overflow-hidden w-full">
+        <div className="overflow-hidden w-full p-4">
           <Outlet />
         </div>
       </div>

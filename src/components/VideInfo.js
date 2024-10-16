@@ -1,13 +1,20 @@
+import { useState } from "react";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { IoMdShareAlt, IoIosMore } from "react-icons/io";
 import { GiSaveArrow } from "react-icons/gi";
 
 const VideInfo = ({ videoInfo }) => {
-  // console.log(videoInfo);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
   const { snippet, statistics } = videoInfo;
   const { title, publishedAt, description, channelTitle } = snippet;
   const { likeCount, viewCount } = statistics;
+
+  // Toggle description view
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
 
   return (
     <div className="w-full md:w-[1000px] mx-auto p-4 bg-white shadow-lg rounded-lg">
@@ -43,7 +50,17 @@ const VideInfo = ({ videoInfo }) => {
       </div>
       <div className="mt-3">
         <div className="bg-gray-300 text-lg p-4 rounded-lg">
-          <p className="text-gray-700">{description}</p>
+          <p className="text-gray-700">
+            {showFullDescription
+              ? description
+              : description.slice(0, 100) + "..."}
+          </p>
+          <button
+            onClick={toggleDescription}
+            className="text-blue-500 hover:underline mt-2"
+          >
+            {showFullDescription ? "Read Less" : "Read More"}
+          </button>
         </div>
       </div>
     </div>
